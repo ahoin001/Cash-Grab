@@ -1,23 +1,35 @@
 class Plate {
-    constructor(canvas,x,y) {
-    
-    // when this object is created, give it a canvas to refer too
-    this.canvas = canvas; 
-    this.ctx = canvas.getContext ("2d");
-    
-    // passsed in coordinates
-    this.x = x; 
-    this.y = y; 
+    constructor(canvas, x, y) {
 
-    // width and height of plate when it is created
-    this.width = 100; 
-    this.height = 70; 
-    
-    // create instance of image
-    this.image = new Image (); 
+        // when this object is created, give it a canvas to refer too
+        this.canvas = canvas;
+        this.ctx = canvas.getContext("2d");
 
-    // credit creator <a href=https://th.pngtree.com>กราฟิกจาก pngtree.com</a>
-    this.image.src = "./image/Plate.png"; 
+        // passsed in coordinates
+        this.x = x;
+        this.y = y;
+
+        // width and height of plate when it is created
+        this.width = 100;
+        this.height = 70;
+
+        // create instance of image
+        this.image = new Image();
+
+        // credit creator <a href=https://th.pngtree.com>กราฟิกจาก pngtree.com</a>
+        this.image.src = "./image/Plate.png";
+
     }
-    
+
+    update(dt) {
+
     }
+
+    render() {
+        // use context of canvas passed in constructor
+        let ctx = this.ctx;
+        // draw image using context for the canvas passed in constructor
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    }
+
+}
