@@ -23,11 +23,12 @@ class Plate {
 
     }
 
-    // update(dt) {
+    update() {
+        //TODO : What does it do
+        
 
-    // }
+    }
     
-
     render() {
         // use context of canvas passed in constructor
         let ctx = this.ctx;
