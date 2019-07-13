@@ -19,7 +19,7 @@ class Plate {
         this.image = new Image();
 
         // credit creator <a href=https://th.pngtree.com>กราฟิกจาก pngtree.com</a>
-        this.image.src = "img/plate.png";
+        this.image.src = "img/tray.png";
 
     }
 
@@ -36,6 +36,3 @@ class Plate {
     }
 
 }
-
-window.Plate = Plate;
-console.log('asdf')
