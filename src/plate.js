@@ -23,9 +23,9 @@ class Plate {
 
     }
 
-    update() {
-        //TODO : What does it do
+    update(x) {
         
+        this.x = x;
 
     }
     

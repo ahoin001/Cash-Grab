@@ -1,51 +1,55 @@
 // Access the canvas in order to draw in it, will be using 2d context
-var canvas = document.getElementById('myCanvas');
-var context = canvas.getContext('2d');
-console.log(`canvas made`);
+let canvas = document.getElementById('myCanvas');
+let context = canvas.getContext('2d');
 
 // create plate object
-var plate = new Plate(canvas, 400, 580);
-console.log(" - - -- - -", plate);
+let plate = new Plate(canvas, 400, 580);
 
-// create var holding an image for our backeyPressedeyPressedground
-var gameBackground = new Image();
+// create let holding an image for our backeyPressedeyPressedground
+let gameBackground = new Image();
 gameBackground.src = "../img/city.jpg";
 
-    
+// If you try to call drawImage() before the image has finished loading, won't work 
+// you need to be sure to use the load event so you don't try this before the image has loaded:
+// When image has loaded, imediately draw it to the canvas
 
-// If you try to call drawImage() before the image has finished loading, it won't do anything (or, in older browsers, may even throw an exception). So you need to be sure to use the load event so you don't try this before the image has loaded:
-// When image has loaded, imediaately draw it to the canvas
-const render = () => {
+const drawEverything = () => {
+
+    // draws background
     context.drawImage(gameBackground, 0, 0, 900, 900);
+
+    // draws plate
     plate.render();
-};
 
-var drawEverything = function () {
-
-    //render draws background
-    render();
-
-    // used in place of of onload, 
+    // controlled infinite loop that keeps calling this function
+    // in other words redraws background and plate
     requestAnimationFrame(drawEverything);
 };
 
 // when arrow key is pressed, listener catches it and takes action
-window.addEventListener("keydown", moveSomething, false);
-  
-function moveSomething(e) {
-    switch(e.keyCode) {
+// intercepts loop so plate positin is updated before next loop
+window.addEventListener("keydown", movePlate, false);
+
+// function to be called when eventlistener senses key
+function movePlate(e) {
+    switch (e.keyCode) {
         case 37:
             // left key pressed
-            plate.x -= 20; 
-            
+            plate.x -= 30
+
             break;
 
         case 39:
             // right key pressed
-            plate.x += 20
+            //same as above, just practicing using object
+
+            // add 30 to the x position in plate object
+            plate.update((plate.x) + 30)
+
+
             break;
 
-    }   
-}   
+    }
+}
 
 drawEverything();
