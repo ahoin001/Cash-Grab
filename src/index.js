@@ -4,92 +4,88 @@ let context = canvas.getContext('2d');
 
 /****************************/
 
-// newly spawned objects start at Y=25
+// newly spawned drops will start at Y=25
 var spawnLineY = 25;
 
-// spawn a new object every 1500ms
-var spawnRate = 1500;
+// spawn a new drop every 1500ms
+var spawnRate = 3000;
 
-// set how fast the objects will fall
+// set how fast the dropsArray will fall
 var spawnRateOfDescent = 0.50;
 
-// when was the last object spawned
+// when was the last drop spawned
 var lastSpawn = -1;
 
-//  this array holds all spawned object
-var objects = [];
+//  this array holds all spawned drops
+var dropsArray = [];
 
 //  save the starting time (used to calc elapsed time)
 var startTime = Date.now();
 
-// start animating
-// animate();
-
 const spawnRandomObject = () => {
-    // select a random type for this new object
-    var t;
+    // select a random type for this new drop
+    var theDropType;
 
-    // About Math.random()
-    // Math.random() generates a semi-random number
-    // between 0-1. So to randomly decide if the next object
+    // between 0-1. So to randomly decide if the next drop
     // will be A or B, we say if the random# is 0-.49 we
     // create A and if the random# is .50-1.00 we create B
 
     if (Math.random() < 0.50) {
-        t = "red";
+        theDropType = "red";
+        spawnRateOfDescent = 1.50
     }
     else {
-        t = "blue";
+        theDropType = "blue";
     }
 
-    // create the new object
-    var object = {
-        // set this objects type
-        type: t,
+    // create the new drop
+    var drop = {
+        // set this dropsArray type
+        type: theDropType,
         // set x randomly but at least 15px off the canvas edges
         //600 is my value canvas.width isnt working
         x: Math.random() * (600 - 30) + 15,
-        // set y to start on the line where objects are spawned
+        // set y to start on the line where dropsArray are spawned
         y: spawnLineY,
     }
 
-    // add the new object to the objects[] array
-    objects.push(object);
+    // add the new drop to the dropsArray[] array
+    dropsArray.push(drop);
 }
 
 
 function animate(){
 
     // get the elapsed time
-    var time=Date.now();
+    var time = Date.now();
 
-    // see if its time to spawn a new object
-    if(time>(lastSpawn+spawnRate)){
-        lastSpawn=time;
+    // see if its time to spawn a new drop
+    if( time > (lastSpawn+spawnRate)){
+        lastSpawn = time;
         spawnRandomObject();
     }
 
     // request another animation frame
     //requestAnimationFrame(animate);
 
-    // clear the canvas so all objects can be 
+    // clear the canvas so all dropsArray can be 
     // redrawn in new positions
     //ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    // draw the line where new objects are spawned
+    // draw the line where new dropsArray are spawned
     context.beginPath();
     context.moveTo(0,spawnLineY);
     context.lineTo(canvas.width,spawnLineY);
     context.stroke();
 
-    // move each object down the canvas
-    for(var i=0;i<objects.length;i++){
-        var object=objects[i];
-        object.y+=spawnRateOfDescent;
+    // move each drop down the canvas
+    for(var i=0;i<dropsArray.length;i++){
+        var drop=dropsArray[i];
+        drop.y+=spawnRateOfDescent;
         context.beginPath();
-        context.arc(object.x,object.y,8,0,Math.PI*2);
+        context.arc(drop.x,drop.y,8,0,Math.PI*2);
         context.closePath();
-        context.fillStyle=object.type;
+        context.fillStyle=drop.type;
         context.fill();
     }
 
@@ -107,9 +103,6 @@ let plate = new Plate(canvas, 400, 580);
 // create let holding an image for our backeyPressedeyPressedground
 let gameBackground = new Image();
 gameBackground.src = "../img/city.jpg";
-
-//array of different drops
-let dropsArray = [];
 
 // If you try to call drawImage() before the image has finished loading, won't work 
 // you need to be sure to use the load event so you don't try this before the image has loaded:
