@@ -3,7 +3,12 @@ window.onload = function () {
     // Access the canvas in order to draw in it, will be using 2d context
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
+    console.log(`canvas made`);
 
+    // create plate 
+    var Plate = new window.Plate(canvas, 50, 80);
+    console.log(Plate);
+    
     // create var holding an image for our background
     var gameBackground = new Image();
     gameBackground.src = "../img/city.jpg";
@@ -12,21 +17,17 @@ window.onload = function () {
     // When image has loaded, imediaately draw it to the canvas
     const render = () => {
         context.drawImage(gameBackground, 0, 0, 900, 900);
-    }
-
-    // gameBackground.onload = function () {
-    //     context.drawImage(gameBackground, 0, 0, 900, 900);
-    // };
+    };
 
     var w = window;
     requestAnimationFrame = w.requestAnimationFrame || w.WebkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
     var drawEverything = function () {
         //render draws background
         render();
-
+        Plate.render()
         // TODO : Why use this instead of onload
         requestAnimationFrame(drawEverything);
     };
 
     drawEverything();
-}
+};
