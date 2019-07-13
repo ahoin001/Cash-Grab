@@ -9,6 +9,9 @@ let plate = new Plate(canvas, 400, 580);
 let gameBackground = new Image();
 gameBackground.src = "../img/city.jpg";
 
+//array of different drops
+let dropsArray = [];
+
 // If you try to call drawImage() before the image has finished loading, won't work 
 // you need to be sure to use the load event so you don't try this before the image has loaded:
 // When image has loaded, imediately draw it to the canvas
@@ -20,6 +23,11 @@ const drawEverything = () => {
 
     // draws plate
     plate.render();
+
+    // renders a new drop each time function is called
+    for (var i = 0; i < dropsArray.length; i++) {
+        dropsArray[i].render();
+    }
 
     // controlled infinite loop that keeps calling this function
     // in other words redraws background and plate
@@ -33,23 +41,26 @@ window.addEventListener("keydown", movePlate, false);
 // function to be called when eventlistener senses key
 function movePlate(e) {
     switch (e.keyCode) {
+
+        //left key pressed
         case 37:
-            // left key pressed
-            plate.x -= 30
-
+            if (plate.x > -50) {
+                console.log(plate.x);
+                plate.x -= 20;
+            }
             break;
-
+        // right key pressed
         case 39:
-            // right key pressed
-            //same as above, just practicing using object
-
-            // add 30 to the x position in plate object
-            plate.update((plate.x) + 30)
-
-
+            if (plate.x < 560) {
+                console.log(plate.x);
+                plate.x += 20;
+            }
             break;
-
+        default:
+            console.log("What are you doping?");
     }
+
 }
+
 
 drawEverything();
