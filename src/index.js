@@ -5,13 +5,13 @@ let context = canvas.getContext('2d');
 /****************************/
 
 // newly spawned drops will start at Y=25
-var spawnLineY = 25;
+var spawnLineY = 20;
 
 // spawn a new drop every 1500ms
-var spawnRate = 3000;
+var spawnRate = 2000;
 
 // set how fast the dropsArray will fall
-var spawnRateOfDescent = 0.50;
+var spawnRateOfDescent = 2.5;
 
 // when was the last drop spawned
 var lastSpawn = -1;
@@ -23,49 +23,27 @@ var dropsArray = [];
 var startTime = Date.now();
 
 const spawnRandomObject = () => {
-    // select a random type for this new drop
-    var theDropType;
-
-    // between 0-1. So to randomly decide if the next drop
-    // will be A or B, we say if the random# is 0-.49 we
-    // create A and if the random# is .50-1.00 we create B
-
-    // if (Math.random() < 0.50) {
-    //     theDropType = "red";
-    //     // spawnRateOfDescent = 2.50;
-    // }
-    // else {
-    //     theDropType = "blue";
-    //     // spawnRateOfDescent = .50;
-    // }
-
+    
     var img = new Image();   // Create new img element
 
     if ((Math.floor((Math.random() * 4)) + 1) === 1) {
-        theDropType = "1";
 
         img.src = '../img/cat1.png'; // Set source path
 
     }
     else if ((Math.floor((Math.random() * 4)) + 1) === 2) {
-        theDropType = "2";
 
         img.src = '../img/cat2.png'; // Set source path
+
     }
     else if ((Math.floor((Math.random() * 4)) + 1) === 3) {
-        theDropType = "3";
 
         img.src = '../img/cat3.png'; // Set source path
+
     }
-
-
-
 
     // create the new drop object using this blueprint
     var drop = {
-
-        // set this dropsArray type
-        type: theDropType,
 
         // will select random image everytime a drop is created from png1-5
         image: img,
@@ -95,13 +73,6 @@ function animate() {
         spawnRandomObject();
     }
 
-    // request another animation frame
-    //requestAnimationFrame(animate);
-
-    // clear the canvas so all dropsArray can be 
-    // redrawn in new positions
-    //ctx.clearRect(0,0,canvas.width,canvas.height);
-
     // draw the line where new dropsArray are spawned
     context.beginPath();
     context.moveTo(0, spawnLineY);
@@ -113,11 +84,9 @@ function animate() {
         var drop = dropsArray[i];
         drop.y += spawnRateOfDescent;
         context.beginPath();
-        // context.arc(drop.x, drop.y, 8, 0, Math.PI * 2);
 
         // draw random image drop
         context.drawImage(drop.image, drop.x, drop.y, 40, 40);
-
         context.closePath();
         context.fillStyle = drop.type;
         context.fill();
@@ -125,11 +94,11 @@ function animate() {
 
 }
 
-
-
-
 /***************************************************** */
 
+            // PLATE OBJECT AND GAME CANVAS
+
+/***************************************************** */
 
 // create plate object
 let plate = new Plate(canvas, 400, 580);
@@ -151,15 +120,17 @@ const drawEverything = () => {
     plate.render();
 
     animate();
-    // renders a new drop each time function is called
-    // for (var i = 0; i < dropsArray.length; i++) {
-    //     dropsArray[i].render();
-    // }
 
     // controlled infinite loop that keeps calling this function
     // in other words redraws background and plate
     requestAnimationFrame(drawEverything);
 };
+
+/***************************************************** */
+
+            // MOVEMENT CODE
+
+/***************************************************** */
 
 // when arrow key is pressed, listener catches it and takes action
 // intercepts loop so plate positin is updated before next loop
