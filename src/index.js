@@ -57,6 +57,10 @@ const spawnRandomObject = () => {
 
     }
 
+    // random spot on axis drops will spawn from
+    // let spawnXAxis = Math.random() * (600 - 30) + 15;
+    // let aDrop = new Drops(canvas,)
+
     // add the new drop to the dropsArray[] array
     dropsArray.push(drop);
 }

@@ -1,5 +1,5 @@
 class Drops {
-    constructor(canvas, x, y) {
+    constructor(canvas, x, y, imageSrc) {
 
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
@@ -7,10 +7,7 @@ class Drops {
         this.y = y;
         this.width = 50;
         this.height = 50;
-        this.image = new Image();
-        // will select random image everytime a drop is created
-        this.image.src = "../image/cat" + (Math.floor((Math.random() * 6)) + 1) + ".png";
-
+        this.image = imageSrc;
     }
 
     updateY(dt) {
