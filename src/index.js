@@ -30,23 +30,53 @@ const spawnRandomObject = () => {
     // will be A or B, we say if the random# is 0-.49 we
     // create A and if the random# is .50-1.00 we create B
 
-    if (Math.random() < 0.50) {
-        theDropType = "red";
-        spawnRateOfDescent = 1.50
+    // if (Math.random() < 0.50) {
+    //     theDropType = "red";
+    //     // spawnRateOfDescent = 2.50;
+    // }
+    // else {
+    //     theDropType = "blue";
+    //     // spawnRateOfDescent = .50;
+    // }
+
+    var img = new Image();   // Create new img element
+
+    if ((Math.floor((Math.random() * 4)) + 1) === 1) {
+        theDropType = "1";
+
+        img.src = '../img/cat1.png'; // Set source path
+
     }
-    else {
-        theDropType = "blue";
+    else if ((Math.floor((Math.random() * 4)) + 1) === 2) {
+        theDropType = "2";
+
+        img.src = '../img/cat2.png'; // Set source path
+    }
+    else if ((Math.floor((Math.random() * 4)) + 1) === 3) {
+        theDropType = "3";
+
+        img.src = '../img/cat3.png'; // Set source path
     }
 
-    // create the new drop
+
+
+
+    // create the new drop object using this blueprint
     var drop = {
+
         // set this dropsArray type
         type: theDropType,
+
+        // will select random image everytime a drop is created from png1-5
+        image: img,
+
         // set x randomly but at least 15px off the canvas edges
-        //600 is my value canvas.width isnt working
+        // 600 is my value canvas.width isnt working
         x: Math.random() * (600 - 30) + 15,
+
         // set y to start on the line where dropsArray are spawned
         y: spawnLineY,
+
     }
 
     // add the new drop to the dropsArray[] array
@@ -54,13 +84,13 @@ const spawnRandomObject = () => {
 }
 
 
-function animate(){
+function animate() {
 
     // get the elapsed time
     var time = Date.now();
 
     // see if its time to spawn a new drop
-    if( time > (lastSpawn+spawnRate)){
+    if (time > (lastSpawn + spawnRate)) {
         lastSpawn = time;
         spawnRandomObject();
     }
@@ -74,18 +104,22 @@ function animate(){
 
     // draw the line where new dropsArray are spawned
     context.beginPath();
-    context.moveTo(0,spawnLineY);
-    context.lineTo(canvas.width,spawnLineY);
+    context.moveTo(0, spawnLineY);
+    context.lineTo(canvas.width, spawnLineY);
     context.stroke();
 
     // move each drop down the canvas
-    for(var i=0;i<dropsArray.length;i++){
-        var drop=dropsArray[i];
-        drop.y+=spawnRateOfDescent;
+    for (var i = 0; i < dropsArray.length; i++) {
+        var drop = dropsArray[i];
+        drop.y += spawnRateOfDescent;
         context.beginPath();
-        context.arc(drop.x,drop.y,8,0,Math.PI*2);
+        // context.arc(drop.x, drop.y, 8, 0, Math.PI * 2);
+
+        // draw random image drop
+        context.drawImage(drop.image, drop.x, drop.y, 40, 40);
+
         context.closePath();
-        context.fillStyle=drop.type;
+        context.fillStyle = drop.type;
         context.fill();
     }
 
