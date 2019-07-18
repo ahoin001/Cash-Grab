@@ -29,18 +29,20 @@ const spawnRandomObject = () => {
     var dropImage = new Image();
 
 
-    if ((Math.floor((Math.random() * 4)) + 1) === 1) {
+    var rand = (Math.floor((Math.random() * 3)) + 1);
+
+    if (rand === 1) {
 
         // Set source path
         dropImage.src = '../img/cat1.png';
 
     }
-    else if ((Math.floor((Math.random() * 4)) + 1) === 2) {
+    else if ( rand === 2) {
 
         dropImage.src = '../img/cat2.png';
 
     }
-    else if ((Math.floor((Math.random() * 4)) + 1) === 3) {
+    else if (rand === 3) {
 
         dropImage.src = '../img/cat3.png';
 
@@ -86,7 +88,7 @@ function animate() {
         if (drop.detectCollision(plate)) {
             console.log(drop.x ,drop.y);
             console.log(plate.x ,plate.y,plate.width,plate.height);
-            console.log(dropsArray);
+            dropsArray.forEach(element => console.log(element, element.x, element.y, element.image.src));
             console.log("the plate: ", plate)
             console.log("BOOOOMMMM!");
             alert("BOOMMMM!");
