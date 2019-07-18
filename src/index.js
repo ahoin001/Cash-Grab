@@ -20,51 +20,42 @@ var lastSpawn = -1;
 var dropsArray = [];
 
 //  save the starting time (used to calc elapsed time)
+
 var startTime = Date.now();
 
 const spawnRandomObject = () => {
-    
-    var img = new Image();   // Create new img element
+
+    // Create new img element
+    var dropImage = new Image();
+
 
     if ((Math.floor((Math.random() * 4)) + 1) === 1) {
 
-        img.src = '../img/cat1.png'; // Set source path
+        // Set source path
+        dropImage.src = '../img/cat1.png';
 
     }
     else if ((Math.floor((Math.random() * 4)) + 1) === 2) {
 
-        img.src = '../img/cat2.png'; // Set source path
+        dropImage.src = '../img/cat2.png';
 
     }
     else if ((Math.floor((Math.random() * 4)) + 1) === 3) {
 
-        img.src = '../img/cat3.png'; // Set source path
+        dropImage.src = '../img/cat3.png';
 
     }
 
-    // create the new drop object using this blueprint
-    var drop = {
+    // everytime this function is called we update x with random #
+    let spawnXAxis = Math.floor(Math.random() * (600 - 30)) + 15;
 
-        // will select random image everytime a drop is created from png1-5
-        image: img,
-
-        // set x randomly but at least 15px off the canvas edges
-        // 600 is my value canvas.width isnt working
-        x: Math.random() * (600 - 30) + 15,
-
-        // set y to start on the line where dropsArray are spawned
-        y: spawnLineY,
-
-    }
-
-    // random spot on axis drops will spawn from
-    // let spawnXAxis = Math.random() * (600 - 30) + 15;
-    // let aDrop = new Drops(canvas,)
+    // create object of drop
+    var aDrop = new Drops(spawnXAxis, spawnLineY, dropImage);
 
     // add the new drop to the dropsArray[] array
-    dropsArray.push(drop);
-}
+    dropsArray.push(aDrop);
 
+}
 
 function animate() {
 
@@ -87,25 +78,40 @@ function animate() {
     for (var i = 0; i < dropsArray.length; i++) {
         var drop = dropsArray[i];
         drop.y += spawnRateOfDescent;
-        context.beginPath();
 
+        console.log("About to draw a cat bro");
         // draw random image drop
-        context.drawImage(drop.image, drop.x, drop.y, 40, 40);
-        context.closePath();
-        context.fillStyle = drop.type;
-        context.fill();
+        context.drawImage(drop.image, drop.x, drop.y, drop.width, drop.height);
+
+        if (drop.detectCollision(plate)) {
+            console.log(drop.x ,drop.y);
+            console.log(plate.x ,plate.y,plate.width,plate.height);
+            console.log(dropsArray);
+            console.log("the plate: ", plate)
+            console.log("BOOOOMMMM!");
+            alert("BOOMMMM!");
+
+
+        }
+
+        // When drop passes certain point, remove it 
+        if (drop.y === 700)
+        {
+            drop.image.src="";
+        }
+
     }
 
 }
 
 /***************************************************** */
 
-            // PLATE OBJECT AND GAME CANVAS
+// PLATE OBJECT AND GAME CANVAS
 
 /***************************************************** */
 
 // create plate object
-let plate = new Plate(canvas, 400, 580);
+let plate = new Plate(canvas, 400, 700);
 
 // create let holding an image for our backeyPressedeyPressedground
 let gameBackground = new Image();
@@ -132,7 +138,7 @@ const drawEverything = () => {
 
 /***************************************************** */
 
-            // MOVEMENT CODE
+// MOVEMENT CODE
 
 /***************************************************** */
 

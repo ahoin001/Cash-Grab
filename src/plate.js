@@ -11,29 +11,25 @@ class Plate {
         this.x = x;
         this.y = y;
 
-        // width and height of plate when it is created
-        this.width = 400;
-        this.height = 170;
-
         // create instance of image
         this.image = new Image();
 
         // credit creator <a href=https://th.pngtree.com>กราฟิกจาก pngtree.com</a>
         this.image.src = "img/tray.png";
+       
+        // width and height we will pass into drawimage
+        this.width = 200;
+        this.height = 50;
 
     }
 
-    update(x) {
-        
-        this.x = x;
-
-    }
-    
     render() {
         // use context of canvas passed in constructor
         let ctx = this.ctx;
+
         // draw image using context for the canvas passed in constructor
-        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        //ctx.drawImage(this.image, this.x, this.y, this.width,50);
+        ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
 }

@@ -1,26 +1,38 @@
 class Drops {
-    constructor(canvas, x, y, imageSrc) {
+  constructor(x, y, imageSrc) {
 
-        this.canvas = canvas;
-        this.ctx = canvas.getContext("2d");
-        this.x = x;
-        this.y = y;
-        this.width = 50;
-        this.height = 50;
-        this.image = imageSrc;
-    }
+    this.x = x;
+    this.y = y;
 
-    updateY(dt) {
-        // makes it fall
-        this.y += 100 * dt;
-    }
+    this.width = 50;
+    this.height = 50;
+    this.image = imageSrc;
 
-    render() {
+  }
 
-        // draw the image in provided canvas with our values we made and we recieved
-        var ctx = this.ctx;
-        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+  getLeft() {
+    return this.x;
+  }
+  getRight() {
+    return this.x + this.width;
+  }
 
-    }
+  getBottom() {
+    console.log("cats Y: ===-=-=-=-=-=-=-=-=-=-=-=-=-=", this.y)
+    return this.y + this.height;
+  }
+
+  detectCollision(plate) {
+
+    if (
+      this.x + this.width > plate.x &&
+      this.y < plate.y + plate.height &&
+      this.y + this.height > plate.y) {
+       // collision detected!
+       window.alert("Collision");
+       return true;
+   }
+
+  }
 
 }
