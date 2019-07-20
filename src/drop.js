@@ -27,11 +27,13 @@ class Drops {
     if (
       this.x + this.width > plate.x &&
       this.y < plate.y + plate.height &&
-      this.y + this.height > plate.y) {
-       // collision detected!
-       window.alert("Collision");
-       return true;
-   }
+      this.y + this.height > plate.y) 
+      {
+      // collision detected!
+      window.alert("Collision");
+      
+      return true;
+    }
 
   }
 
